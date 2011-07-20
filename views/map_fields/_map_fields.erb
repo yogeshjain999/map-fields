@@ -7,7 +7,7 @@
       <thead>
         <tr>
           <% (1..@rows[0].size).each do |c| -%>
-            <th><%= select_tag "fields[#{c}]", options_for_select(@fields), :include_blank => true, :class => 'field_options' %></th>
+            <th><%= select_tag "fields[#{c}]", options_for_select(@fields, @fields[@rows[0][c-1].try(:capitalize)]), :include_blank => false, :class => 'field_options' %></th>
           <% end -%>
         </tr>
       </thead>

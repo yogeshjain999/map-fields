@@ -63,7 +63,7 @@ module MapFields
       if expected_fields.respond_to?(:call)
         expected_fields = expected_fields.call(params)
       end
-      @fields = ([nil] + expected_fields).inject([]){ |o, e| o << [e, o.size]}
+      @fields = ([nil] + expected_fields).inject({}){ |o, e| o.merge({e => o.size})}
       @parameters = []
       options[:params].each do |param|
         @parameters += ParamsParser.parse(params, param)
