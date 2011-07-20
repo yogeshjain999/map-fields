@@ -1,4 +1,4 @@
-require 'fastercsv'
+require 'csv'
 
 module MapFields
   VERSION = '1.0.0'
@@ -52,11 +52,11 @@ module MapFields
     unless @map_fields_error
       @rows = []
       begin
-        FasterCSV.foreach(session[:map_fields][:file]) do |row|
+        CSV.foreach(session[:map_fields][:file]) do |row|
           @rows << row
           break if @rows.size == 10
         end
-      rescue FasterCSV::MalformedCSVError => e
+      rescue CSV::MalformedCSVError => e
         @map_fields_error = e
       end
       expected_fields = self.class.read_inheritable_attribute(:map_fields_fields)
@@ -135,7 +135,7 @@ module MapFields
 
     def each
       row_number = 1
-      FasterCSV.foreach(@file) do |csv_row|
+      CSV.foreach(@file) do |csv_row|
         unless row_number == 1 && @ignore_first_row
           row = {}
           @mapping.each do |k,v|
@@ -195,7 +195,5 @@ end
 
 if defined?(Rails) and defined?(ActionController)
   ActionController::Base.send(:include, MapFields)
-  ActionController::Base.view_paths.push File.expand_path(File.join(File.dirname(__FILE__), '..', 'views'))
-  #This is a hack but the above code is not enough when using bundler and Rails 2.3.5
-  ActionController::Base.view_paths.push "app/views"
+  ActionController::Base.prepend_view_path File.expand_path(File.join(File.dirname(__FILE__), '..', 'views'))
 end
