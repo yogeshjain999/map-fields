@@ -137,7 +137,7 @@ module MapFields
 
     def each
       row_number = 1
-      CSV.foreach(@file) do |csv_row|
+      CSV.foreach(@file, :encoding => 'ISO-8859-1') do |csv_row|
         unless row_number == 1 && @ignore_first_row
           row = {}
           @mapping.each do |k,v|
