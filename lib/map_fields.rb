@@ -52,7 +52,7 @@ module MapFields
     unless @map_fields_error
       @rows = []
       begin
-        CSV.foreach(session[:map_fields][:file]) do |row|
+        CSV.foreach(session[:map_fields][:file], :encoding => 'ISO-8859-1') do |row|
           @rows << row
           break if @rows.size == 10
         end
