@@ -101,7 +101,7 @@ module MapFields
       class_attribute :map_fields_options, :instance_writer => false
       self.map_fields_fields = fields
       self.map_fields_options = options
-      before_filter :map_fields, :only => actions
+      before_action :map_fields, :only => actions
       after_filter :map_fields_cleanup, :only => actions
     end
   end
