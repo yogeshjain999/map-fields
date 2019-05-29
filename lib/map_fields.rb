@@ -102,7 +102,7 @@ module MapFields
       self.map_fields_fields = fields
       self.map_fields_options = options
       before_action :map_fields, :only => actions
-      after_filter :map_fields_cleanup, :only => actions
+      after_action :map_fields_cleanup, :only => actions
     end
   end
 
